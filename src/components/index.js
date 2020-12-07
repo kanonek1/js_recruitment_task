@@ -38,6 +38,18 @@ class ListApp {
     return JSON.parse(localStorage.getItem('localResults'));
   }
 
+  get pagination() {
+    return new Pagination(this.data, this).create();
+  }
+
+  get contentSearch() {
+    return new ContentSearch(this);
+  }
+
+  get section() {
+    return new Section(this);
+  }
+
   // Public
 
   handleDataAPI() {
@@ -60,9 +72,9 @@ class ListApp {
         };
       })
       .then(() => {
-        this._getPagination();
-        this._getContentSearch();
-        this._getSection();
+        this.pagination;
+        this.contentSearch;
+        this.section;
         this._handleList();
         this._handleListLength();
       })
@@ -100,18 +112,6 @@ class ListApp {
   }
 
   // Private
-
-  _getPagination() {
-    return new Pagination(this.data, this).create();
-  }
-
-  _getSection() {
-    return new Section(this);
-  }
-
-  _getContentSearch() {
-    return new ContentSearch(this);
-  }
 
   _getArticle(data) {
     return new Article(data, this).create();
