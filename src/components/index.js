@@ -40,11 +40,10 @@ class ListApp {
 
   // Public
 
-  handleData() {
+  handleDataAPI() {
     const { currentPage, section, searchTerm } = this.data;
     const searchTermParam = searchTerm ? `&q=${searchTerm}` : '';
-    const sectionParam =
-      section === 'all' || section === '' ? '' : `&section=${section}`;
+    const sectionParam = section === 'all' || section === '' ? '' : `&section=${section}`;
 
     const url = `https://content.guardianapis.com/search?from-date=${getLastDate()}&page=${currentPage}${sectionParam}${searchTermParam}&api-key=${
       this.apiKey
@@ -62,7 +61,7 @@ class ListApp {
       })
       .then(() => {
         this._getPagination();
-        this._getSearch();
+        this._getContentSearch();
         this._getSection();
         this._handleList();
         this._handleListLength();
@@ -90,16 +89,13 @@ class ListApp {
     const localResults = JSON.parse(localStorage.getItem('localResults'));
 
     [...localResults].forEach(({ title, link, id }) => {
-      const readLaterItem = new ReadLater(
-        {
-          title,
-          link,
-          id,
-        },
-        this
-      ).create();
+      const readLaterItem = this._getReadLater({
+        title,
+        link,
+        id,
+      });
 
-      return this.readLaterList.appendChild(readLaterItem);
+      return this.readLaterList.insertAdjacentElement('beforeend', readLaterItem);
     });
   }
 
@@ -113,35 +109,32 @@ class ListApp {
     return new Section(this);
   }
 
-  _getSearch() {
+  _getContentSearch() {
     return new ContentSearch(this);
+  }
+
+  _getArticle(data) {
+    return new Article(data, this).create();
+  }
+
+  _getReadLater(data) {
+    return new ReadLater(data, this).create();
   }
 
   _handleList() {
     this.newsList.innerHTML = '';
 
-    [...this.data.results].forEach(
-      ({
+    [...this.data.results].forEach(({ id, sectionName, webPublicationDate, webTitle: title, webUrl: link }) => {
+      const articles = this._getArticle({
+        date: splitByT(webPublicationDate).split('-').reverse().join('.'),
         id,
+        link,
         sectionName,
-        webPublicationDate,
-        webTitle: title,
-        webUrl: link,
-      }) => {
-        const articles = new Article(
-          {
-            date: splitByT(webPublicationDate).split('-').reverse().join('.'),
-            id,
-            link,
-            sectionName,
-            title,
-          },
-          this
-        ).createListElement();
+        title,
+      });
 
-        this.newsList.appendChild(articles);
-      }
-    );
+      this.newsList.appendChild(articles);
+    });
   }
 
   _handleListLength() {

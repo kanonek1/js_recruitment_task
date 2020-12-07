@@ -7,4 +7,4 @@ import { API_KEY } from './api';
 
 const newApp = new ListApp(API_KEY);
 
-newApp.handleData();
+newApp.handleDataAPI();

@@ -1,4 +1,4 @@
-import { handleEvents } from '../../utils';
+import { handleEventsData } from '../../utils';
 
 class Section {
   constructor(element) {
@@ -17,7 +17,7 @@ class Section {
   // Private
 
   _handleChange(event) {
-    handleEvents(event, this.element, 'section');
+    handleEventsData(event, this.element, 'section');
   }
 }
 

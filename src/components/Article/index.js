@@ -1,5 +1,5 @@
 import { getListItemTemplate } from '../../utils/templates';
-
+import { element } from '../../utils';
 class Article {
   constructor(data, element) {
     this.data = data;
@@ -18,8 +18,8 @@ class Article {
 
   // Public
 
-  createListElement() {
-    const listItem = document.createElement('li');
+  create() {
+    const listItem = element('li');
 
     listItem.innerHTML = getListItemTemplate(this.data);
 
@@ -33,14 +33,10 @@ class Article {
   // Private
 
   _saveResult(result) {
-    const saveResult =
-      this.localStorageItemSaved === null ? [] : this.localStorageItemSaved;
+    const saveResult = this.localStorageItemSaved === null ? [] : this.localStorageItemSaved;
 
     if (!saveResult.find(({ id }) => id === result.id)) {
-      localStorage.setItem(
-        'localResults',
-        JSON.stringify([...saveResult, result])
-      );
+      localStorage.setItem('localResults', JSON.stringify([...saveResult, result]));
 
       this.element.handleReadLaterList();
     }

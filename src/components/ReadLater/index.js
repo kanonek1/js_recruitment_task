@@ -1,3 +1,4 @@
+import { element } from '../../utils';
 import { getReadtLaterTemplate } from '../../utils/templates';
 
 class ReadLater {
@@ -9,23 +10,27 @@ class ReadLater {
   // Public
 
   create() {
-    const li = document.createElement('li');
+    const li = element('li');
 
     li.innerHTML = getReadtLaterTemplate(this.data);
 
     const btn = li.querySelector('button');
 
-    btn.addEventListener('click', ({ target: { id: targetId } }) => {
-      const saveResult = JSON.parse(localStorage.getItem('localResults'));
-      const filteredItem = saveResult.filter(({ id }) => id !== targetId);
-
-      localStorage.setItem('localResults', JSON.stringify([...filteredItem]));
-
-      this.element.handleReadLaterList();
-      this.element.handleOnLoadAndRefresh();
-    });
+    btn.addEventListener('click', (e) => this._handleRemoveBtn(e));
 
     return li;
+  }
+
+  // Private
+
+  _handleRemoveBtn({ target: { id: targetId } }) {
+    const saveResult = JSON.parse(localStorage.getItem('localResults'));
+    const filteredItem = saveResult.filter(({ id }) => id !== targetId);
+
+    localStorage.setItem('localResults', JSON.stringify([...filteredItem]));
+
+    this.element.handleReadLaterList();
+    this.element.handleOnLoadAndRefresh();
   }
 }
 

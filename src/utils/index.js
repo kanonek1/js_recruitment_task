@@ -5,7 +5,7 @@ const getLastDate = () => {
   return splitByT(new Date(date).toISOString());
 };
 
-const handleEvents = (event, element, type) => {
+const handleEventsData = (event, element, type) => {
   let { data } = element;
 
   if (event !== undefined) {
@@ -15,8 +15,10 @@ const handleEvents = (event, element, type) => {
 
     data[type] = value;
     if (type !== 'currentPage') data.currentPage = 1;
-    element.handleData();
+    element.handleDataAPI();
   }
 };
 
-export { getLastDate, splitByT, handleEvents };
+const element = (element) => document.createElement(element);
+
+export { getLastDate, splitByT, handleEventsData, element };

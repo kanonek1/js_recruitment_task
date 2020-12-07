@@ -1,4 +1,4 @@
-import { handleEvents } from '../../utils';
+import { handleEventsData } from '../../utils';
 
 class ContentSearch {
   constructor(element) {
@@ -17,7 +17,7 @@ class ContentSearch {
   // Private
 
   _handleInputEvent(event) {
-    handleEvents(event, this.element, 'searchTerm');
+    handleEventsData(event, this.element, 'searchTerm');
   }
 }
 

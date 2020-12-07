@@ -1,4 +1,4 @@
-import { handleEvents } from '../../utils';
+import { element, handleEventsData } from '../../utils';
 class Pagination {
   constructor(data, element) {
     this.data = data;
@@ -21,7 +21,7 @@ class Pagination {
     this.activePageSelect.innerHTML = '';
 
     for (let index = 1; index <= pages; index++) {
-      const option = document.createElement('option');
+      const option = element('option');
 
       option.innerText = index;
       option.selected = currentPage === index ? true : false;
@@ -34,9 +34,7 @@ class Pagination {
   // Private
 
   _handleChange() {
-    this.activePageSelect.addEventListener('change', (event) =>
-      handleEvents(event, this.element, 'currentPage')
-    );
+    this.activePageSelect.addEventListener('change', (event) => handleEventsData(event, this.element, 'currentPage'));
   }
 }
 

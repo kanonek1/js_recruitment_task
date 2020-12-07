@@ -1,4 +1,7 @@
 {
   "singleQuote": true,
-  "trailingComma": "es5"
+  "trailingComma": "es5",
+  "prettier.requirePragma": true,
+  "prettier.trailingComma": "all",
+  "printWidth": 120
 }
