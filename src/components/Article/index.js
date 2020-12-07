@@ -13,7 +13,7 @@ class Article {
   }
 
   get localStorageItemSaved() {
-    return JSON.parse(localStorage.getItem('savedResults'));
+    return JSON.parse(localStorage.getItem('localResults'));
   }
 
   // Public
@@ -38,7 +38,7 @@ class Article {
 
     if (!saveResult.find(({ id }) => id === result.id)) {
       localStorage.setItem(
-        'savedResults',
+        'localResults',
         JSON.stringify([...saveResult, result])
       );
 

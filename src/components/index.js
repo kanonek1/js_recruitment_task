@@ -35,7 +35,7 @@ class ListApp {
   }
 
   get localStorageItemSaved() {
-    return JSON.parse(localStorage.getItem('savedResults'));
+    return JSON.parse(localStorage.getItem('localResults'));
   }
 
   // Public
@@ -87,9 +87,9 @@ class ListApp {
   handleReadLaterList() {
     this.readLaterList.innerHTML = '';
 
-    const savedResults = JSON.parse(localStorage.getItem('savedResults'));
+    const localResults = JSON.parse(localStorage.getItem('localResults'));
 
-    [...savedResults].forEach(({ title, link, id }) => {
+    [...localResults].forEach(({ title, link, id }) => {
       const readLaterItem = new ReadLater(
         {
           title,

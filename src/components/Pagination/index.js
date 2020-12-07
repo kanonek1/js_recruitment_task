@@ -1,5 +1,4 @@
 import { handleEvents } from '../../utils';
-
 class Pagination {
   constructor(data, element) {
     this.data = data;
